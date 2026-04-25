@@ -1,7 +1,7 @@
 # Inlämningsuppgift i R programmering: Försäkringskostnader R_analys
 #Installation och nödvändiga patek.
 
-install.packages("tidyverse")
+install.packages("tidyverse", "ggplot2", "boom")
 
 library(tidyverse)
 library(ggplot2)
@@ -93,11 +93,43 @@ ggplot(data_clean, aes(x =age, y = charges, color = smoker)) +
        x = "Ålder", y = "Kostnad (USD)")
 
 
-# Figur 4. Genomsnittlig kostnad per BMI-kategori och rökstatus
+# Figur 4. BMI vs kostnad, med regressionslinje
   
 ggplot(df_clean, aes(x = age, y = charges, color = smoker)) +
   geom_point(alpha = 0.3) +
   geom_smooth(method = "lm", se =FALSE, color = "red") +
   labs(title = "BMI vs försäkringskostnad", x = "BMI", y = "kostnad (USD)")
 
-  
+# Tabell med medelkostnad per region och rökstatus
+df_clean %>%
+  group_by(region, smoker) %>%
+  summarise(medel_kostnad = mean(charges), antal = n()) %>%
+  arrange(desc(medel_kostnad))
+
+# Regressionsanalys
+
+# Modell1 - enkel linjär regression med utvalda prediktorer
+model1 <- lm(charges ~ age + bmi + children + smoker + chronic_condition +
+               exercise_level + plan_type + prior_accidents + prior_claims +
+               annual_checkups + region + sex,
+             data = df_clean)
+
+summary(model1)
+
+# Modell2 - förenklad modell
+model2 <- lm(charges ~ age + bmi + smoker + prior_accidents + prior_claims,
+             data = df_clean)
+
+summary(model2)
+
+# jämförelse av modeller:
+AIC(model1, model2)
+BIC(model1, model2)
+anova(model1, model2)
+
+
+
+
+
+
+
