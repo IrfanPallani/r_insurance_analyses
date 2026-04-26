@@ -162,7 +162,7 @@ ggsave("figurer/4.Regressionslinje.png", plot = fig4)
 
 # Tabell med medelkostnad per region och rökstatus
 
-tabell1 <- df_clean %>%
+tabell_region <- df_clean %>%
   group_by(region, smoker) %>%
   summarise(
     medel_kostnad = mean(charges), 
@@ -170,8 +170,8 @@ tabell1 <- df_clean %>%
     .groups = "drop"
   ) %>%
   arrange(desc(medel_kostnad))
-write_csv(tabell1, "tabeller/medel_kostnad_region_smoker.csv")
-tabell1
+write_csv(tabell_region, "tabeller/medel_kostnad_region_smoker.csv")
+print(tabell_region)
 # ============================================================
 # Regressionsanalys
 # ============================================================
@@ -184,6 +184,8 @@ df_model <- df_clean %>%
 # Modell1 - fullständig modell med all relevanta prediktorer
 
 model1 <- lm(charges ~ age + bmi + smoker + prior_claims, data = df_model)
+
+cat("\n\n===== MODELL 1 =====\n")
 summary(model1)
 
 
@@ -191,6 +193,7 @@ summary(model1)
 
 model2 <- lm(charges ~ age + bmi, data = df_model)
 
+cat("\n\n===== MODELL 2 =====\n")
 summary(model2)
 
 
@@ -203,7 +206,13 @@ summary(model2)
 
 AIC(model1, model2)
 BIC(model1, model2)
+cat("\n\n===== JÄMFÖRELSE =====\n")
+cat("AIC model1:", AIC(model1), "\n")
+cat("AIC model2:", AIC(model2), "\n")
+cat("BIC model1:", BIC(model1), "\n")
+cat("BIC model2:", BIC(model2), "\n")
+
 
 # F-test: testar om model1 bättre än model2.
-
+cat("\nF-test (model1 vs model2):\n")
 anova(model2, model1)
