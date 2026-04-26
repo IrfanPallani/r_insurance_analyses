@@ -1,0 +1,16 @@
+## Individuell uppgift i R for data sciense.
+## Analysera försäkringskostnader med R.
+
+Det här har jag gjort
+
+Uppgiften är att ta reda på vad som påverkar försäkringskostnader.
+
+- Jag läste in data- en fi med 1100 kunder.
+- Städade data- tog bort rader med fel,  fixade stavning, la till nya 
+  variabler (BMI-grupp, åldergrupp, historikpoäng)
+- Gjorde fyra bilder och tabell (fyra diagram som finns i mappen figurer)
+-Byggde två styckna regressionsmodeller för att se vad som påverkar kostnaden mest.
+- jämförde modellerna - såg att rökning, ålder och BMI är viktigast.
+
+## Slutsats: Analysen visar att rökning, ålder och BMI är viktigaste
+   faktorerna för försäkringskostnader.
