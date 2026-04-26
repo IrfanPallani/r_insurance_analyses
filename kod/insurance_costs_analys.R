@@ -1,7 +1,7 @@
 # Inlämningsuppgift i R programmering: Försäkringskostnader R_analys
 #Installation och nödvändiga patek.
 #-------------------------------------------------------------
-#install.packages("tidyverse", "broom")
+install.packages(c("tidyverse", "broom"))
 #-------------------------------------------------------------
 
 library(tidyverse)
@@ -20,7 +20,6 @@ df <- read_csv("data/insurance_costs.csv", show_col_types = FALSE)
 dir.create("figurer", recursive = TRUE, showWarnings = FALSE)
 
 dir.create("tabeller", recursive = TRUE, showWarnings = FALSE)
-
 
 getwd()
 # Visa struktur
